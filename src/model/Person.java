@@ -2,9 +2,9 @@ package model;
 
 public class Person {
 	private IdType idType;
-	private double idNumber;
+	private int idNumber;
 	
-	public Person(IdType idType, double idNumber) {
+	public Person(IdType idType, int idNumber) {
 		this.idType = idType;
 		this.idNumber = idNumber;
 	}
@@ -13,7 +13,7 @@ public class Person {
 		return idType;
 	}
 
-	public double getIdNumber() {
+	public int getIdNumber() {
 		return idNumber;
 	}
 	

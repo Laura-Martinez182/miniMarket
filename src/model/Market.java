@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import exceptions.DifferentDayException;
+import exceptions.UnderAgeException;
+
 public class Market {
 	private List<Person> people;
 	private int day;
@@ -22,5 +25,8 @@ public class Market {
 	}
 
 	
-	
+	public void register(IdType type, double num) throws UnderAgeException, DifferentDayException{
+		//int count;
+		
+	}
 }

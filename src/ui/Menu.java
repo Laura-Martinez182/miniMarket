@@ -13,8 +13,9 @@ public class Menu {
 	IdType idType;
 	double idNumber;
 
+	Market market;
 	public Menu(){
-		Market market = new Market();
+		market = new Market();
 	}
 
 	public void showMenu(){
@@ -24,31 +25,61 @@ public class Menu {
 		System.out.println("3) Salir");
 
 	}
-	
+
 	public int readOption(){
 		int choice = sc.nextInt();
 		sc.nextLine();
 		return choice;
-    }
-	
-	//metodos
-	
+	}
+
+	public int registerEntry() {
+		System.out.println("Ingrese el numero que corresponda a su tipo de documento:\n"
+				+ "1.Tarjeta de identidad \n"
+				+ "2.Cedula de Ciudadania \n"
+				+ "3.Pasaporte \n"
+				+ "4.Cédula de Extranjería");
+		int select = sc.nextInt();
+
+		switch (select) {
+		case 1:
+			idType = IdType.TI;
+			break;
+		case 2:
+			idType = IdType.CC;
+			break;
+		case 3:
+			idType = IdType.PP;
+			break;
+		case 4:
+			idType = IdType.CE;
+			break;
+		default:
+			break;
+		}
+		
+		System.out.println("Ingrese su numero de documento: ");
+			idNumber = sc.nextInt();
+			
+		return select;
+
+	}
+
 	public void doOperation(int choice){
 		switch (choice){
-			case TO_REGISTER:
+		case TO_REGISTER:
 			//System.out.println(  ());
 			break;
-			case PEOPLE_WHO_TRIED_TO_GET_IN :
+		case PEOPLE_WHO_TRIED_TO_GET_IN :
 			//System.out.println( ());
 			break;
-			case EXIT:
+		case EXIT:
 			break;
-			default: 
+		default: 
 			System.out.println("Opcion invalida, ingrese nuevamente");
-		
+
 		}
 	}
-	
+
 	public void startProgram(){
 		int option;
 		do{
