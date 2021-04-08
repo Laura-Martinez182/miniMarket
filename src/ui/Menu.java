@@ -1,7 +1,10 @@
 package ui;
 import model.*;
+
 import java.util.Scanner;
-//importar excepciones
+
+import exceptions.DifferentDayException;
+import exceptions.UnderAgeException;
 
 public class Menu {
 
@@ -10,8 +13,8 @@ public class Menu {
 	private final static int EXIT = 3;
 
 	Scanner sc = new Scanner(System.in);
-	IdType idType;
-	double idNumber;
+	private IdType idType;
+	private String idNumber;
 
 	Market market;
 	public Menu(){
@@ -32,7 +35,7 @@ public class Menu {
 		return choice;
 	}
 
-	public int registerEntry() {
+	public void registerEntry() throws UnderAgeException, DifferentDayException {
 		System.out.println("Ingrese el numero que corresponda a su tipo de documento:\n"
 				+ "1.Tarjeta de identidad \n"
 				+ "2.Cedula de Ciudadania \n"
@@ -56,21 +59,27 @@ public class Menu {
 		default:
 			break;
 		}
-		
-		System.out.println("Ingrese su numero de documento: ");
-			idNumber = sc.nextInt();
-			
-		return select;
 
+		System.out.println("Ingrese su numero de documento: ");
+		idNumber = sc.nextLine();
+		sc.nextLine();
+
+		market.register(idType, idNumber, market.getDay());
+		System.out.println("Se ha contado la persona");
 	}
 
-	public void doOperation(int choice){
+	public void countPeopleWhoTried() throws UnderAgeException, DifferentDayException {
+		System.out.println("El numero de personas que intentaron ingresar fue: "); 
+		market.getPeopleWhoTryToEnter();
+	}
+
+	public void doOperation(int choice) throws UnderAgeException, DifferentDayException{
 		switch (choice){
 		case TO_REGISTER:
-			//System.out.println(  ());
+			registerEntry();
 			break;
-		case PEOPLE_WHO_TRIED_TO_GET_IN :
-			//System.out.println( ());
+		case PEOPLE_WHO_TRIED_TO_GET_IN:
+			countPeopleWhoTried();
 			break;
 		case EXIT:
 			break;
@@ -80,7 +89,7 @@ public class Menu {
 		}
 	}
 
-	public void startProgram(){
+	public void startProgram() throws UnderAgeException, DifferentDayException{
 		int option;
 		do{
 			showMenu();

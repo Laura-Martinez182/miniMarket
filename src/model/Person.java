@@ -2,9 +2,9 @@ package model;
 
 public class Person {
 	private IdType idType;
-	private int idNumber;
+	private String idNumber;
 	
-	public Person(IdType idType, int idNumber) {
+	public Person(IdType idType, String idNumber) {
 		this.idType = idType;
 		this.idNumber = idNumber;
 	}
@@ -13,7 +13,7 @@ public class Person {
 		return idType;
 	}
 
-	public int getIdNumber() {
+	public String getIdNumber() {
 		return idNumber;
 	}
 	

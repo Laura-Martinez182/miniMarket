@@ -5,17 +5,17 @@ import java.time.LocalDate;
 public class DifferentDayException extends Exception {
 
 	private static final long serialVersionUID = 1;
-	private double idNumber;
+	private int penultimate;
 	private int day;
 	
-	public DifferentDayException(double num, int d) {
+	public DifferentDayException(int penNum, int d) {
 		super("No le corresponde el día de acuerdo con el número de su cédula y el día del mes.");
-		idNumber = num;
+		penultimate = penNum;
 		day = d;
 	}
 
-	public double getIdNumber() {
-		return idNumber;
+	public int getpenultimate() {
+		return penultimate;
 	}
 	
 	public int getDay() {
