@@ -9,7 +9,7 @@ public class DifferentDayException extends Exception {
 	private int day;
 	
 	public DifferentDayException(int penNum, int d) {
-		super("No le corresponde el día de acuerdo con el número de su cédula y el día del mes.");
+		super("No le corresponde salir de acuerdo con el número de su cédula y el día del mes.");
 		penultimate = penNum;
 		day = d;
 	}

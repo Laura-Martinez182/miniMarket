@@ -26,7 +26,8 @@ public class Market {
 	}
 
 
-	public void register(IdType type, String num, int day) throws UnderAgeException, DifferentDayException{
+	public boolean register(IdType type, String num, int day) throws UnderAgeException, DifferentDayException{
+		boolean added = false;
 		int penultimate = getPenultimateIdNum(num);
 		count++;
 		if(type == IdType.TI) {
@@ -42,6 +43,8 @@ public class Market {
 
 		Person p = new Person(type, num);
 		people.add(p);
+		added = true;
+		return added; 
 	}
 
 	public void getPeopleWhoTryToEnter() {
@@ -49,6 +52,6 @@ public class Market {
 	}
 
 	public int getPenultimateIdNum(String num){  
-		return num.charAt(num.length()-2);
+		return Character.getNumericValue(num.charAt(num.length()-2));
 	}
 }

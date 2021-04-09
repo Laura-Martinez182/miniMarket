@@ -36,41 +36,52 @@ public class Menu {
 	}
 
 	public void registerEntry() throws UnderAgeException, DifferentDayException {
-		System.out.println("Ingrese el numero que corresponda a su tipo de documento:\n"
-				+ "1.Tarjeta de identidad \n"
-				+ "2.Cedula de Ciudadania \n"
-				+ "3.Pasaporte \n"
-				+ "4.Cédula de Extranjería");
-		int select = sc.nextInt();
 
-		switch (select) {
-		case 1:
-			idType = IdType.TI;
-			break;
-		case 2:
-			idType = IdType.CC;
-			break;
-		case 3:
-			idType = IdType.PP;
-			break;
-		case 4:
-			idType = IdType.CE;
-			break;
-		default:
-			break;
+		try {
+			System.out.println("Ingrese el numero que corresponda a su tipo de documento:\n"
+					+ "1.Tarjeta de identidad \n"
+					+ "2.Cedula de Ciudadania \n"
+					+ "3.Pasaporte \n"
+					+ "4.Cédula de Extranjería");
+			int select = sc.nextInt();
+				sc.nextLine();
+				
+			switch (select) {
+			case 1:
+				idType = IdType.TI;
+				break;
+			case 2:
+				idType = IdType.CC;
+				break;
+			case 3:
+				idType = IdType.PP;
+				break;
+			case 4:
+				idType = IdType.CE;
+				break;
+			default:
+				break;
+			}
+			
+			System.out.println("Ingrese su numero de documento: ");
+			idNumber = sc.nextLine();
+			market.register(idType, idNumber, market.getDay());
+			System.out.println("El usuario fue registrado");
+			
+		} catch (UnderAgeException uae) {
+			System.out.println("Debe tener un tipo de documento que no sea TI, pues debe ser mayor de edad.");
+			
+		} catch (DifferentDayException dde) {
+			System.out.println("No le corresponde salir de acuerdo con el número de su cédula: " +market.getPenultimateIdNum(idNumber) +" y el día del mes: " +market.getDay());
+			
 		}
 
-		System.out.println("Ingrese su numero de documento: ");
-		idNumber = sc.nextLine();
-		sc.nextLine();
-
-		market.register(idType, idNumber, market.getDay());
-		System.out.println("Se ha contado la persona");
 	}
 
 	public void countPeopleWhoTried() throws UnderAgeException, DifferentDayException {
-		System.out.println("El numero de personas que intentaron ingresar fue: "); 
-		market.getPeopleWhoTryToEnter();
+		System.out.println("El numero de personas que intentaron ingresar fue: ");
+		market.getPeopleWhoTryToEnter(); 
+		
 	}
 
 	public void doOperation(int choice) throws UnderAgeException, DifferentDayException{
