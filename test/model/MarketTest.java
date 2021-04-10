@@ -34,6 +34,7 @@ public class MarketTest {
 			IdType idType= IdType.CC;
 			String idNumber = "1006171163";
 			int day = 9;
+			
 			boolean added = market.register(idType, idNumber, day);
 
 			assertTrue(added);
@@ -93,20 +94,19 @@ public class MarketTest {
 			IdType idType= IdType.TI;
 			String idNumber = "1006231159";
 			int day = 2;
-			
-			boolean added = market.register(idType, idNumber, day);
 
-			assertFalse(added);
-
-			List<Person> people = market.getPeople();
-			assertEquals(0, people.size());
-			assertEquals(1,market.getPeopleWhoTryToEnter());
+			market.register(idType, idNumber, day);
 
 			fail("UnderAgeException expected");
 
 		} catch (UnderAgeException uae) {
 			assertEquals(uae.getIdType(),IdType.TI);
 			uae.printStackTrace();
+			
+			List<Person> people = market.getPeople();
+			assertEquals(0, people.size());
+			assertEquals(1,market.getPeopleWhoTryToEnter());
+			
 		} catch (DifferentDayException dde) {
 			fail("UnderAgeException expected, not DifferentDayException");
 		}
@@ -124,19 +124,17 @@ public class MarketTest {
 			int day = 8;
 
 
-			boolean added = market.register(idType, idNumber, day);
-
-			assertFalse(added);
-
-			List<Person> people = market.getPeople();
-			assertEquals(3, people.size());
-			assertEquals(4,market.getPeopleWhoTryToEnter());
+			market.register(idType, idNumber, day);
 
 			fail("UnderAgeException expected");
 
 		} catch (UnderAgeException uae) {
 			assertEquals(uae.getIdType(),IdType.TI);
 			uae.printStackTrace();
+			List<Person> people = market.getPeople();
+			assertEquals(3, people.size());
+			assertEquals(4,market.getPeopleWhoTryToEnter());
+			
 		} catch (DifferentDayException dde) {
 			fail("UnderAgeException expected, not DifferentDayException");
 		}
@@ -151,24 +149,19 @@ public class MarketTest {
 
 		try {
 			IdType idType= IdType.CC;
-			String idNumber = "1006171170";
-			int day = 9;
-			
-			boolean added = market.register(idType, idNumber, day);
+			String idNumber = "1006171190";
+			int day = 19;
 
-			assertFalse(added);
-
-			List<Person> people = market.getPeople();
-			assertEquals(0, people.size());
-			assertEquals(1,market.getPeopleWhoTryToEnter());
+			market.register(idType, idNumber, day);
 
 			fail("DifferentDayException expected");
 
 		} catch (UnderAgeException uae) {
 			fail("DifferentDayException expected, not UnderAgeException");
 		} catch (DifferentDayException dde) {
-			assertEquals(dde.getDay(), 9);
-			dde.printStackTrace();
+			List<Person> people = market.getPeople();
+			assertEquals(0, people.size());
+			assertEquals(1,market.getPeopleWhoTryToEnter());
 		}
 	}
 
@@ -179,24 +172,18 @@ public class MarketTest {
 
 			IdType idType= IdType.CE;
 			String idNumber = "1004123175";
-			int day = 9;
+			int day = 21;
 
-
-			boolean added = market.register(idType, idNumber, day);
-
-			assertFalse(added);
-
-			List<Person> people = market.getPeople();
-			assertEquals(3, people.size());
-			assertEquals(4,market.getPeopleWhoTryToEnter());
+			market.register(idType, idNumber, day);
 
 			fail("DifferentDayException expected");
 
 		} catch (UnderAgeException uae) {
 			fail("DifferentDayException expected, not UnderAgeException");
 		} catch (DifferentDayException dde) {
-			assertEquals(dde.getDay(), 9);
-			dde.printStackTrace();
+			List<Person> people = market.getPeople();
+			assertEquals(3, people.size());
+			assertEquals(4,market.getPeopleWhoTryToEnter());
 		}
 	}
 }
