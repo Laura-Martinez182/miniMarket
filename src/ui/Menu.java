@@ -79,8 +79,7 @@ public class Menu {
 	}
 
 	public void countPeopleWhoTried() throws UnderAgeException, DifferentDayException {
-		System.out.println("El numero de personas que intentaron ingresar fue: ");
-		market.getPeopleWhoTryToEnter(); 
+		System.out.println("El numero de personas que intentaron ingresar fue: "+ market.getPeopleWhoTryToEnter());
 		
 	}
 

@@ -16,72 +16,190 @@ public class MarketTest {
 		market = new Market();
 	}
 
-	public void setUpScenary2() {
+	public void setUpScenary2() throws UnderAgeException, DifferentDayException {
+		market = new Market();
 
+		market.register(IdType.PP, "1006171189", 9);
+		market.register(IdType.CC, "1005123161", 9);
+		market.register(IdType.CE, "1056173129", 9);
 	}
 
 
 	//Correct register
 	@Test
-	public void testRegister1() throws UnderAgeException, DifferentDayException {
+	public void testRegister1() {
 		setUpScenary1();
-		
-		IdType idType= IdType.CC;
-		String idNumber = "1006171163";
-		int day = 9;
-		
-		boolean added = market.register(idType, idNumber, day);
-		
-		assertTrue(added);
-		
-		List<Person> people = market.getPeople();
-		assertEquals(1, people.size());
-		
-		Person p = people.get(0);
-		assertEquals(idType,p.getIdType());
-		assertEquals(idNumber,p.getIdNumber());
+
+		try {
+			IdType idType= IdType.CC;
+			String idNumber = "1006171163";
+			int day = 9;
+			boolean added = market.register(idType, idNumber, day);
+
+			assertTrue(added);
+
+			List<Person> people = market.getPeople();
+			assertEquals(1, people.size());
+			assertEquals(1,market.getPeopleWhoTryToEnter());
+
+			Person p = people.get(0);
+			assertEquals(idType,p.getIdType());
+			assertEquals(idNumber,p.getIdNumber());
+
+		} catch (UnderAgeException uae) {
+			fail("Not UnderAgeException expected");
+
+		} catch (DifferentDayException dde) {
+			fail("Not DifferentDayException expected");
+		}
 	}
-	
 
-
+	@Test
 	public void testRegister2() {
-		
+		try {
+			setUpScenary2();
+
+			IdType idType= IdType.PP;
+			String idNumber = "1005181140";
+			int day = 9;
+			boolean added = market.register(idType, idNumber, day);
+
+			assertTrue(added);
+
+			List<Person> people = market.getPeople();
+			assertEquals(4, people.size());
+			assertEquals(4,market.getPeopleWhoTryToEnter());
+
+			Person p = people.get(3);
+			assertEquals(idType,p.getIdType());
+			assertEquals(idNumber,p.getIdNumber());
+
+		} catch (UnderAgeException uae) {
+			fail("Not UnderAgeException expected");
+
+		} catch (DifferentDayException dde) {
+			fail("Not DifferentDayException expected");
+		}
 	}
 
 
 	//Can´t register because of TI
 
-	/*try {
-		boolean added = market.register(idType, idNumber, day);
-		fail();
-	} catch (UnderAgeException uae) {
-		System.out.println("Debe tener un tipo de documento que no sea TI, pues debe ser mayor de edad.");
-		uae.printStackTrace();
-	} catch (DifferentDayException dde) {
-		System.out.println("No le corresponde salir de acuerdo con el número de su cédula: " +market.getPenultimateIdNum(idNumber) +" y el día del mes: " +market.getDay());
-		dde.printStackTrace();
-	}
+	@Test
 	public void testRegister3() {
 		setUpScenary1();
-	}*/
+
+		try {
+			IdType idType= IdType.TI;
+			String idNumber = "1006231159";
+			int day = 2;
+			
+			boolean added = market.register(idType, idNumber, day);
+
+			assertFalse(added);
+
+			List<Person> people = market.getPeople();
+			assertEquals(0, people.size());
+			assertEquals(1,market.getPeopleWhoTryToEnter());
+
+			fail("UnderAgeException expected");
+
+		} catch (UnderAgeException uae) {
+			assertEquals(uae.getIdType(),IdType.TI);
+			uae.printStackTrace();
+		} catch (DifferentDayException dde) {
+			fail("UnderAgeException expected, not DifferentDayException");
+		}
+	}
 
 
+	@Test
 	public void testRegister4() {
-		
+
+		try {
+			setUpScenary2();
+
+			IdType idType= IdType.TI;
+			String idNumber = "1005181179";
+			int day = 8;
+
+
+			boolean added = market.register(idType, idNumber, day);
+
+			assertFalse(added);
+
+			List<Person> people = market.getPeople();
+			assertEquals(3, people.size());
+			assertEquals(4,market.getPeopleWhoTryToEnter());
+
+			fail("UnderAgeException expected");
+
+		} catch (UnderAgeException uae) {
+			assertEquals(uae.getIdType(),IdType.TI);
+			uae.printStackTrace();
+		} catch (DifferentDayException dde) {
+			fail("UnderAgeException expected, not DifferentDayException");
+		}
 	}
 
 
 
 	//Can´t register because of different day
-
+	@Test
 	public void testRegister5() {
 		setUpScenary1();
+
+		try {
+			IdType idType= IdType.CC;
+			String idNumber = "1006171170";
+			int day = 9;
+			
+			boolean added = market.register(idType, idNumber, day);
+
+			assertFalse(added);
+
+			List<Person> people = market.getPeople();
+			assertEquals(0, people.size());
+			assertEquals(1,market.getPeopleWhoTryToEnter());
+
+			fail("DifferentDayException expected");
+
+		} catch (UnderAgeException uae) {
+			fail("DifferentDayException expected, not UnderAgeException");
+		} catch (DifferentDayException dde) {
+			assertEquals(dde.getDay(), 9);
+			dde.printStackTrace();
+		}
 	}
 
-
+	@Test
 	public void testRegister6() {
-		
+		try {
+			setUpScenary2();
+
+			IdType idType= IdType.CE;
+			String idNumber = "1004123175";
+			int day = 9;
+
+
+			boolean added = market.register(idType, idNumber, day);
+
+			assertFalse(added);
+
+			List<Person> people = market.getPeople();
+			assertEquals(3, people.size());
+			assertEquals(4,market.getPeopleWhoTryToEnter());
+
+			fail("DifferentDayException expected");
+
+		} catch (UnderAgeException uae) {
+			fail("DifferentDayException expected, not UnderAgeException");
+		} catch (DifferentDayException dde) {
+			assertEquals(dde.getDay(), 9);
+			dde.printStackTrace();
+		}
 	}
-	
-	
 }
+
+
+

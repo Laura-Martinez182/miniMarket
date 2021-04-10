@@ -47,8 +47,8 @@ public class Market {
 		return added; 
 	}
 
-	public void getPeopleWhoTryToEnter() {
-		System.out.println(count);
+	public int getPeopleWhoTryToEnter() {
+		 return count;
 	}
 
 	public int getPenultimateIdNum(String num){  
